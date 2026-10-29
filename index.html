@@ -20,6 +20,29 @@ button,input,textarea{font:inherit}button{cursor:pointer;padding:9px 12px;border
 .login{max-width:470px;margin:10vh auto;padding:34px 25px;text-align:center;background:var(--paper);border-top:16px solid var(--red);box-shadow:0 12px 35px #514a3025}.login p{line-height:1.6}.login button{margin-top:12px;font-weight:bold}.hint{font-size:13px;color:#6b6556}.hidden{display:none!important}
 @media(max-width:690px){.app{display:block}.sidebar{margin-bottom:10px}.notelist{display:flex;overflow:auto;gap:4px}.noteitem{min-width:115px;max-width:170px}.pad{min-height:60vh}.pad textarea{min-height:55vh}.backtop{right:10px;bottom:12px}.heading input{font-size:19px}.topright .small{display:none}.top{padding:10px}}
 @media print{body{background:white}.top,.sidebar,.foot,.heading button,.hintedit,.toc,.backtop{display:none}.app{display:block;padding:0}.pad{box-shadow:none;min-height:100vh}}
+
+/* Classroom-inspired paper palette and tactile surfaces.
+   Visual overrides only: existing layout, sizes and application logic remain intact. */
+:root{--paper:#f8f4e8;--paper-2:#fdfbf6;--line:rgba(95,136,185,.24);--red:#d2675a;--accent:#1f6f78;--accent-2:#2c8a95;--ink:#24313a;--soft-ink:#5a6870;--panel:#f6f3ea;--border:#d7d0bf}
+body{background:radial-gradient(circle at 1px 1px,rgba(255,255,255,.42) 1px,transparent 0),linear-gradient(180deg,#dbe7ea,#eef3f2);background-size:14px 14px,auto}
+button{border-color:var(--border);background:linear-gradient(180deg,#fffdf8,#f2eee3);color:var(--ink);box-shadow:inset 0 1px 0 #ffffffb8}
+button:hover{background:linear-gradient(180deg,#fff,#f4f0e6)}
+.small,.hintedit,.foot,.hint{color:var(--soft-ink)}
+.sidebar{border-color:var(--border);background:linear-gradient(180deg,#ffffff8c,#ffffff33),repeating-linear-gradient(to bottom,transparent 0 27px,#829baa14 27px 28px),var(--panel);box-shadow:0 8px 24px #2b3a4314}
+.noteitem.active{background:#1f6f781f;box-shadow:inset 3px 0 var(--accent)}
+.noteitem:hover{background:#1f6f7814}
+.pad{background:linear-gradient(180deg,#ffffff47,#ffffff14),radial-gradient(circle at 1px 1px,#7878780f 1px,transparent 0),linear-gradient(180deg,var(--paper-2),var(--paper));background-size:auto,8px 8px,auto;box-shadow:0 16px 34px #3d443324}
+.pad:before{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.pad:after{background:var(--red);opacity:.9}
+.heading input{color:var(--ink)}
+.toc{border-bottom-color:#1f6f782e}
+.toc-label{color:var(--accent);letter-spacing:.04em}
+.toc a{color:var(--ink);border-color:#d8c48d;background:linear-gradient(180deg,#fffaf0,#fff7dc)}
+.backtop{background:linear-gradient(180deg,var(--accent-2),var(--accent));box-shadow:0 6px 18px #0003}
+.backtop:hover{background:linear-gradient(180deg,#2f98a3,#1f6f78)}
+.login{background:linear-gradient(180deg,#ffffff66,#ffffff14),radial-gradient(circle at 1px 1px,#7878780d 1px,transparent 0),linear-gradient(180deg,var(--paper-2),var(--paper));background-size:auto,8px 8px,auto;border-top-color:var(--accent);box-shadow:0 12px 35px #3d443324}
+.hintedit code{background:#f1eee4;border:1px solid var(--border);color:#7a4b2d}
+@media print{body{background:white}}
 </style></head><body>
 <section id="login" class="login"><h1>Legal Pad</h1><p>Tu bloc amarillo, privado y sincronizado.</p><button id="signin">Entrar con Google</button><p id="loginmsg" class="hint">Tus notas estarán en tu propia cuenta.</p></section>
 <div id="workspace" class="hidden"><header class="top"><strong class="brand">Legal Pad <span class="small">/ Mis notas</span></strong><div class="topright"><span class="small" id="userlabel"></span><button id="signout">Salir</button></div></header><div class="app"><aside class="sidebar"><div class="sidebarhead"><strong>Mis notas</strong><button id="newnote">+ Nueva</button></div><nav id="notelist" class="notelist" aria-label="Notas"></nav></aside><main class="pad"><div class="lines"></div><div class="heading"><input id="title" maxlength="120" aria-label="Título" placeholder="Sin título"><button id="download" title="Exportar texto">TXT</button><button id="delete" title="Eliminar nota">Eliminar</button></div><nav id="toc" class="toc" aria-label="Índice de esta nota"></nav><div class="hintedit"><button id="insertheading" class="insertheading" type="button">+ Encabezado H1</button> &nbsp; o escribe <code># Título</code> al inicio de una línea.</div><textarea id="body" aria-label="Contenido" placeholder="Empieza a escribir aquí..."></textarea></main></div><footer class="foot"><span id="status" role="status">Conectando…</span><span>Firebase Cloud Sync</span></footer><button id="backtop" class="backtop hidden" type="button" title="Volver al principio de la nota" aria-label="Volver al principio">↑ Arriba</button></div>
