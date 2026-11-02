@@ -180,7 +180,7 @@ body{min-width:0;overflow-x:hidden}
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { firebaseConfig } from './firebase-config.js';
 
@@ -297,14 +297,35 @@ if(!ready){
 } else {
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app); db = getFirestore(app);
-  $('signin').onclick = async () => {
-    try { await signInWithPopup(auth, new GoogleAuthProvider()); }
-    catch(e){
-      if(e.code === 'auth/popup-blocked') await signInWithRedirect(auth, new GoogleAuthProvider());
-      else $('loginmsg').textContent = 'No se pudo iniciar sesión: ' + e.message;
+  // GitHub Pages is a different origin from firebaseapp.com. Redirect
+  // authentication can fail on modern Android browsers with storage partitioning.
+  // Use a direct, user-initiated popup and make failures actionable.
+  const signinButton = $('signin');
+  const loginMessage = $('loginmsg');
+  signinButton.onclick = async () => {
+    signinButton.disabled = true;
+    loginMessage.textContent = 'Abriendo acceso de Google…';
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      loginMessage.textContent = 'Sesión iniciada.';
+    } catch(e) {
+      const code = e?.code || '';
+      if(code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+        loginMessage.textContent = 'Inicio de sesión cancelado. Pulsa «Entrar con Google» para intentarlo de nuevo.';
+      } else if(code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment') {
+        loginMessage.textContent = 'Este navegador bloqueó el acceso. Abre Legal Pad directamente en Google Chrome (no en el navegador interno de otra aplicación) y permite ventanas emergentes.';
+      } else if(code === 'auth/unauthorized-domain') {
+        loginMessage.textContent = 'Dominio no autorizado en Firebase. Agrega gabect.github.io en Authentication → Settings → Authorized domains.';
+      } else if(code === 'auth/network-request-failed') {
+        loginMessage.textContent = 'Error de red al conectar con Google. Comprueba la conexión e inténtalo otra vez.';
+      } else {
+        loginMessage.textContent = 'Error de Google (' + (code || 'desconocido') + '). ' + (e?.message || 'Inténtalo desde Chrome.');
+      }
+      console.error('Legal Pad Google sign-in',code,e);
+    } finally {
+      signinButton.disabled = false;
     }
   };
-  getRedirectResult(auth).catch(e => $('loginmsg').textContent = e.message);
   onAuthStateChanged(auth, u => {
     if(unsubscribe){ unsubscribe(); unsubscribe = null; }
     user = u; notes = []; selected = null; dirty = false; clearTimeout(timer);
