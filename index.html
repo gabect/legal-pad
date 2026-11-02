@@ -21,36 +21,37 @@ button,input,textarea{font:inherit}button{cursor:pointer;padding:9px 12px;border
 @media(max-width:690px){.app{display:block}.sidebar{margin-bottom:10px}.notelist{display:flex;overflow:auto;gap:4px}.noteitem{min-width:115px;max-width:170px}.pad{min-height:60vh}.pad textarea{min-height:55vh}.backtop{right:10px;bottom:12px}.heading input{font-size:19px}.topright .small{display:none}.top{padding:10px}}
 @media print{body{background:white}.top,.sidebar,.foot,.heading button,.hintedit,.toc,.backtop{display:none}.app{display:block;padding:0}.pad{box-shadow:none;min-height:100vh}}
 
-/* Classroom reference: illustrated notebook paper, bold ink outlines, blue/yellow/red marker accents. CSS-only; no layout or behavior changes. */
-:root{--paper:#f8f0db;--paper-2:#fff8e9;--line:rgba(70,166,221,.31);--red:#ed5556;--accent:#20a9f0;--accent-2:#147bcc;--ink:#191919;--soft-ink:#4a4238;--panel:#fff3d9;--border:#211e1b}
-body{background:radial-gradient(circle at 2px 2px,#b9a68e27 1px,transparent 1.5px),linear-gradient(160deg,#ece2cf,#f6ecdc);background-size:12px 12px,auto;color:var(--ink)}
-button{border:2px solid #1a1918;background:#ffdc45;color:#151515;font-weight:800;box-shadow:3px 3px 0 #171717;border-radius:6px;text-shadow:none}
-button:hover{background:#ffe971}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #148add}
-.brand{font-family:"Trebuchet MS","Arial Black",Arial,sans-serif;font-weight:900;letter-spacing:.025em;text-shadow:1px 1px 0 #fff}
-.small,.hintedit,.foot,.hint{color:#4b453e}
-.sidebar{border:3px solid #181818;background:radial-gradient(circle at 1px 1px,#927a5124 1px,transparent 2px),repeating-linear-gradient(to bottom,transparent 0 31px,#50a9dc35 32px 33px),#fff3d9;background-size:13px 13px,auto,auto;border-radius:9px 7px 11px 8px;box-shadow:5px 6px 0 #1a1714}
-.sidebarhead strong,.toc-label{font-family:"Trebuchet MS","Arial Black",Arial,sans-serif;font-weight:900;color:#131313}
-.noteitem{border-radius:5px;font-weight:750}
-.noteitem.active{background:#57bdef;border:2px solid #1b1b1b;box-shadow:2px 2px 0 #1b1b1b}
-.noteitem:hover{background:#ffda45}
-.pad{background:radial-gradient(circle at 2px 2px,#a68e6a17 1px,transparent 2px),linear-gradient(170deg,#fff9eb,#f7eedb);background-size:11px 11px,auto;border:3px solid #1c1b19;border-radius:9px 8px 10px 7px;box-shadow:7px 9px 0 #171717,11px 15px 25px #6d584a3a}
-.pad:before{height:17px;background:repeating-linear-gradient(-10deg,#f7353a 0 32px,#ef4641 32px 60px);border-bottom:3px solid #1c1b19}
-.pad:after{background:#ed5152;width:3px;opacity:.7}
-.lines{background:repeating-linear-gradient(to bottom,transparent 0,transparent 32px,var(--line) 33px,var(--line) 34px);background-position:0 50px}
-.heading input{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;color:#151515;letter-spacing:.015em}
-.toc{border-bottom:2px dashed #201d1a}
-.toc-label{letter-spacing:.045em;color:#171717}
-.toc a{color:#101010;border:2px solid #181818;border-radius:5px 7px 5px 6px;background:#67c7fa;font-weight:800;box-shadow:2px 2px 0 #222}
-.toc a:nth-of-type(3n+2){background:#ffdc42}
-.toc a:nth-of-type(3n){background:#ff8f84}
-.toc a:hover{background:#fff3ba}
-.hintedit code{background:#fff0a8;border:2px solid #1b1b1b;color:#171717;border-radius:3px}
-.backtop{background:#ffda38;color:#111;border:3px solid #1b1b1b;box-shadow:4px 4px 0 #1b1b1b}
-.backtop:hover{background:#5bbef1}
-.login{background:radial-gradient(circle at 2px 2px,#99805d1a 1px,transparent 2px),repeating-linear-gradient(to bottom,transparent 0 32px,#5bbee53d 33px 34px),#fff3d9;background-size:11px 11px,auto,auto;border:3px solid #191919;border-top:17px solid #f43c45;box-shadow:8px 9px 0 #1a1918;border-radius:7px}
-.login h1{font-family:"Trebuchet MS","Arial Black",Arial,sans-serif;color:#131313;font-weight:900}
-@media print{body{background:white}.sidebar{box-shadow:none}.pad{box-shadow:none}}
+/* Mr. M website texture kit — adapted to Legal Pad without layout or functionality changes.
+   Kit visual vocabulary: cream ruled paper, kraft backing, ink strokes, yellow/blue/coral markers. */
+:root{--paper:#f8f3e8;--line:#a8cee3;--red:#e65b58;--ink:#171717;--yellow:#ffe13f;--blue:#91d8ff;--kraft:#d5bc92}
+body{background-color:#e8dbc6;background-image:repeating-linear-gradient(16deg,#8e74500a 0 2px,transparent 2px 11px),radial-gradient(circle at 2px 2px,#72583b17 1px,transparent 2px),linear-gradient(125deg,#e5d4b6,#f3e6ce);background-size:auto,12px 12px,auto;color:var(--ink)}
+button{border:2px solid #171717;border-radius:7px;background:var(--yellow);color:#171717;font-weight:800;box-shadow:3px 3px 0 #171717;transition:transform .12s ease,box-shadow .12s ease}
+button:hover{background:#ffeb75;transform:translate(-1px,-1px);box-shadow:4px 4px 0 #171717}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171717}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #279de0;outline-offset:2px}
+.brand{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;letter-spacing:.015em;text-shadow:1px 1px #ffffff9c}
+.small,.foot,.hint,.hintedit{color:#5b5146}
+.sidebar{border:3px solid #171717;border-radius:8px 10px 7px 9px;background-color:#fff9e9;background-image:repeating-linear-gradient(to bottom,transparent 0 31px,#94cee250 32px 33px),radial-gradient(circle at 1px 1px,#816b4d1a 1px,transparent 2px);background-size:auto,11px 11px;box-shadow:5px 6px 0 #171717;position:relative}
+.sidebar:before{content:"";position:absolute;left:-9px;top:-12px;width:64px;height:24px;pointer-events:none;transform:rotate(-14deg);opacity:.74;background:linear-gradient(90deg,#b18b5499,#f1d6a2b0 25%,#c8a676b9 78%,#b18b5499);clip-path:polygon(0 10%,96% 0,100% 86%,3% 100%)}
+.noteitem{font-weight:750}
+.noteitem.active{background:linear-gradient(176deg,transparent 14%,#91d8ff 14% 85%,transparent 85%);box-shadow:inset 3px 0 #171717}
+.noteitem:hover{background:linear-gradient(177deg,transparent 12%,#ffe13f 12% 88%,transparent 88%)}
+.pad{border:3px solid #171717;border-radius:8px 7px 10px 8px;background-color:#fffaf0;background-image:radial-gradient(circle at 1px 1px,#7b64481a 1px,transparent 1.7px),repeating-linear-gradient(92deg,transparent 0 75px,#82654306 76px 77px);background-size:13px 13px,auto;box-shadow:7px 9px 0 #171717,11px 16px 22px #5a432c3d}
+.pad:before{height:17px;background:repeating-linear-gradient(174deg,#ed5958 0 24px,#db4f51 24px 53px);border-bottom:2px solid #171717}
+.pad:after{width:3px;background:#e46a68;opacity:.74}
+.lines{background:repeating-linear-gradient(to bottom,transparent 0 32px,#a8cee39c 33px 34px);background-position:0 50px}
+.heading input{font-family:"Trebuchet MS",Arial,sans-serif;color:#171717;font-weight:900;letter-spacing:-.015em}
+.toc{border-bottom:2px dashed #24201b}
+.toc-label{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;color:#171717}
+.toc a{font-weight:800;border:2px solid #171717;border-radius:6px 8px 5px 7px;color:#171717;background:linear-gradient(178deg,transparent 12%,#91d8ff 12% 87%,transparent 87%);box-shadow:2px 2px 0 #171717}
+.toc a:nth-of-type(2n){background:linear-gradient(176deg,transparent 12%,#ffe13f 12% 86%,transparent 86%)}
+.toc a:nth-of-type(3n){background:linear-gradient(178deg,transparent 9%,#f2a09b 9% 90%,transparent 90%)}
+.hintedit code{background:#ffeaa0;border:1px dashed #171717;padding:1px 4px}
+.backtop{background:var(--yellow);color:#171717;border:3px solid #171717;box-shadow:3px 4px 0 #171717}
+.backtop:hover{background:var(--blue)}
+.login{border:3px solid #171717;border-top:16px solid #eb5a57;border-radius:8px;background-color:#fff8e7;background-image:repeating-linear-gradient(to bottom,transparent 0 32px,#a8cee36b 33px 34px),radial-gradient(circle at 1px 1px,#80684b20 1px,transparent 2px);background-size:auto,13px 13px;box-shadow:7px 9px 0 #171717}
+.login h1{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900}
+@media print{body{background:#fff}.sidebar,.pad,.login{box-shadow:none}}
 </style></head><body>
 <section id="login" class="login"><h1>Legal Pad</h1><p>Tu bloc amarillo, privado y sincronizado.</p><button id="signin">Entrar con Google</button><p id="loginmsg" class="hint">Tus notas estarán en tu propia cuenta.</p></section>
 <div id="workspace" class="hidden"><header class="top"><strong class="brand">Legal Pad <span class="small">/ Mis notas</span></strong><div class="topright"><span class="small" id="userlabel"></span><button id="signout">Salir</button></div></header><div class="app"><aside class="sidebar"><div class="sidebarhead"><strong>Mis notas</strong><button id="newnote">+ Nueva</button></div><nav id="notelist" class="notelist" aria-label="Notas"></nav></aside><main class="pad"><div class="lines"></div><div class="heading"><input id="title" maxlength="120" aria-label="Título" placeholder="Sin título"><button id="download" title="Exportar texto">TXT</button><button id="delete" title="Eliminar nota">Eliminar</button></div><nav id="toc" class="toc" aria-label="Índice de esta nota"></nav><div class="hintedit"><button id="insertheading" class="insertheading" type="button">+ Encabezado H1</button> &nbsp; o escribe <code># Título</code> al inicio de una línea.</div><textarea id="body" aria-label="Contenido" placeholder="Empieza a escribir aquí..."></textarea></main></div><footer class="foot"><span id="status" role="status">Conectando…</span><span>Firebase Cloud Sync</span></footer><button id="backtop" class="backtop hidden" type="button" title="Volver al principio de la nota" aria-label="Volver al principio">↑ Arriba</button></div>
