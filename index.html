@@ -1,88 +1,270 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff2b4"><title>Legal Pad</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ead8a2">
+<title>Legal Pad — Mis notas</title>
 <style>
-:root{--paper:#fff4b8;--line:rgba(67,117,176,.23);--red:#c4403a;--ink:#33312c}*{box-sizing:border-box}
-body{margin:0;background:#e9e6dc;font:16px Arial,sans-serif;color:var(--ink)}
-button,input,textarea{font:inherit}button{cursor:pointer;padding:9px 12px;border:1px solid #d1cbbc;background:#fffdf7;border-radius:6px;color:#3d3a33}button:hover{background:white}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #6a91b0}
-.top{max-width:1100px;margin:auto;padding:15px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-size:18px;font-weight:750}.small{font-size:12px;color:#69685f}
-.topright{display:flex;align-items:center;gap:9px}.app{max-width:1100px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;padding:0 12px 20px}
-.sidebar{border:1px solid #d1caba;background:#f8f6ee;border-radius:7px;padding:12px;align-self:start}.sidebarhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.sidebarhead strong{font-size:14px}.notelist{display:grid;gap:5px}.noteitem{width:100%;text-align:left;padding:10px;background:transparent;border:0;border-radius:5px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.noteitem.active{background:#eadca9}.noteitem:hover{background:#eee8d5}
-.pad{position:relative;min-height:calc(100dvh - 145px);background:var(--paper);border-radius:2px;box-shadow:0 12px 32px #514a3025;overflow:hidden}
-.pad:before{content:"";height:17px;background:var(--red);position:absolute;inset:0 0 auto;z-index:3}.pad:after{content:"";position:absolute;top:17px;bottom:0;left:clamp(43px,9%,72px);width:2px;background:#cf635f;opacity:.8;pointer-events:none}
-.lines{position:absolute;inset:17px 0 0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 32px,var(--line) 33px,var(--line) 34px);background-position:0 50px;pointer-events:none}
-.heading{position:relative;padding:32px 22px 0 clamp(62px,12%,99px);display:flex;gap:8px}.heading input{width:100%;border:0;background:transparent;font-size:22px;font-weight:bold;min-width:0;outline:none}.heading button{white-space:nowrap;padding:5px 8px}
-.toc{position:relative;margin:16px 22px 0 clamp(62px,12%,99px);padding:9px 0;border-bottom:1px solid #beaa71;display:flex;flex-wrap:wrap;align-items:center;gap:7px 9px}
-.toc:empty{display:none}.toc-label{font-size:12px;font-weight:bold;color:#7f5944;margin-right:3px}.toc a{font-size:13px;color:#744333;text-decoration:none;border:1px solid #c9b47e;padding:5px 9px;background:#fff7d4;border-radius:4px;overflow-wrap:anywhere;max-width:100%}.toc a:hover{text-decoration:underline}
-.hintedit{position:relative;margin:8px 22px 0 clamp(62px,12%,99px);font-size:12px;color:#796c4c}.insertheading{font-size:12px;padding:5px 9px}
-.backtop{position:fixed;z-index:10;right:22px;bottom:24px;border-radius:999px;background:#b8453e;color:white;border:0;box-shadow:0 3px 12px #0004;padding:12px 15px;font-weight:bold}.backtop:hover{background:#96342e}
-.pad textarea{position:relative;display:block;width:100%;min-height:calc(100dvh - 255px);height:auto;overflow:hidden;resize:none;padding:16px 22px 55px clamp(62px,12%,99px);border:0;resize:vertical;background:transparent;outline:0;font-size:17px;line-height:34px;color:var(--ink)}
-.foot{max-width:1100px;margin:auto;padding:0 14px 15px;color:#706f63;font-size:12px;display:flex;justify-content:space-between;gap:12px}
-.login{max-width:470px;margin:10vh auto;padding:34px 25px;text-align:center;background:var(--paper);border-top:16px solid var(--red);box-shadow:0 12px 35px #514a3025}.login p{line-height:1.6}.login button{margin-top:12px;font-weight:bold}.hint{font-size:13px;color:#6b6556}.hidden{display:none!important}
-@media(max-width:690px){.app{display:block}.sidebar{margin-bottom:10px}.notelist{display:flex;overflow:auto;gap:4px}.noteitem{min-width:115px;max-width:170px}.pad{min-height:60vh}.pad textarea{min-height:55vh}.backtop{right:10px;bottom:12px}.heading input{font-size:19px}.topright .small{display:none}.top{padding:10px}}
-@media print{body{background:white}.top,.sidebar,.foot,.heading button,.hintedit,.toc,.backtop{display:none}.app{display:block;padding:0}.pad{box-shadow:none;min-height:100vh}}
+:root{--paper:#f7f0df;--paper-ink:#27211a;--line:#9bc8df;--accent:#da5a56;--muted:#6a5a48;--shadow:rgba(30,17,8,.28)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--paper-ink);background:linear-gradient(rgba(41,24,11,.18), rgba(41,24,11,.18)),url('assets/desk-wood.jpg') center center / cover no-repeat fixed}
+button,input,textarea{font:inherit}
+button{cursor:pointer;padding:9px 12px;border:2px solid rgba(43,28,17,.65);background:#fff8df;border-radius:8px;color:#2e261f;box-shadow:0 2px 6px rgba(0,0,0,.08);font-weight:700}
+button:hover{filter:brightness(1.03)}button:disabled{opacity:.55;cursor:default}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #6a91b0;outline-offset:2px}
+.top{max-width:1120px;margin:0 auto;padding:18px 14px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#fff7e8;text-shadow:0 2px 4px rgba(0,0,0,.35)}.small{font-size:12px;color:#f2e7d1;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.topright{display:flex;align-items:center;gap:9px}.app{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;padding:0 14px 24px}
+.sidebar{border:0;background:transparent;border-radius:0;padding:6px 0 0;align-self:start;box-shadow:none}.sidebarhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;padding:0 4px}.sidebarhead strong{font-size:14px;color:#fff7e8;text-shadow:0 1px 2px rgba(0,0,0,.35)}.notelist{display:grid;gap:12px}
+.noteitem{position:relative;width:100%;min-height:76px;text-align:left;padding:26px 16px 14px 18px;border:0;border-radius:4px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;background:transparent;color:#30261e;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.noteitem::before{content:"";position:absolute;inset:0;background:url('assets/strip-ruled.png') center/100% 100% no-repeat;z-index:-1;filter:drop-shadow(0 5px 10px rgba(0,0,0,.16))}
+.noteitem::after{content:"";position:absolute;width:56px;height:20px;top:-7px;left:12px;background:url('assets/tape-kraft.png') center/contain no-repeat;opacity:.92;transform:rotate(-7deg)}
+.noteitem:nth-child(even)::before{background-image:url('assets/strip-yellow.png')}.noteitem.active{transform:translateY(-1px)}.noteitem.active::before{filter:drop-shadow(0 9px 16px rgba(0,0,0,.2)) saturate(1.04)}.noteitem:hover{transform:translateY(-2px)}
+.pad{position:relative;min-height:calc(100dvh - 145px);background:var(--paper);border-radius:6px;box-shadow:0 18px 32px var(--shadow), 0 2px 6px rgba(0,0,0,.12);overflow:hidden}
+.pad:before{content:"";height:18px;background:var(--accent);position:absolute;inset:0 0 auto;z-index:3;box-shadow:0 2px 0 rgba(126,33,30,.18)}.pad:after{content:"";position:absolute;top:18px;bottom:0;left:clamp(48px,9%,78px);width:2px;background:#d97a74;opacity:.78;pointer-events:none;z-index:2}
+.paper-surface{position:absolute;inset:18px 0 0;background:url('assets/paper-ruled.webp') top center/cover no-repeat;pointer-events:none;opacity:.9;z-index:0}.lines{position:absolute;inset:18px 0 0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 32px,rgba(155,200,223,.52) 33px,rgba(155,200,223,.52) 34px);background-position:0 48px;pointer-events:none;z-index:1;mix-blend-mode:multiply}
+.heading{position:relative;z-index:4;padding:34px 22px 0 clamp(68px,12%,104px);display:flex;gap:8px;align-items:flex-start}.heading input{width:100%;border:0;background:transparent;font-size:24px;font-weight:800;min-width:0;outline:none;color:#2d241d}.heading input::placeholder,textarea::placeholder{color:#8c7b66}.heading button{white-space:nowrap;padding:6px 9px;background:#fff8df}
+.toc{position:relative;z-index:4;margin:16px 22px 0 clamp(68px,12%,104px);padding:10px 0;border-bottom:1px solid rgba(149,128,92,.35);display:flex;flex-wrap:wrap;align-items:center;gap:7px 9px}.toc:empty{display:none}.toc-label{font-size:12px;font-weight:800;color:#6f583d;margin-right:3px;letter-spacing:.04em}.toc a{font-size:13px;color:#483521;text-decoration:none;border:1px solid rgba(124,93,54,.42);padding:6px 10px;background:rgba(255,248,225,.92);border-radius:999px;overflow-wrap:anywhere;max-width:100%;box-shadow:0 1px 2px rgba(0,0,0,.05)}.toc a:hover{text-decoration:underline}
+.hintedit{position:relative;z-index:4;margin:8px 22px 0 clamp(68px,12%,104px);font-size:12px;color:#6e604d}.insertheading{font-size:12px;padding:5px 9px}
+.backtop{position:fixed;z-index:10;right:22px;bottom:24px;border-radius:999px;background:#fff8df;color:#392e25;border:2px solid rgba(43,28,17,.65);box-shadow:0 6px 18px rgba(0,0,0,.18);padding:12px 15px;font-weight:bold}.backtop:hover{background:#fffdf2}
+.pad textarea{position:relative;z-index:4;display:block;width:100%;min-height:101vh;height:auto;overflow:hidden;resize:none;padding:16px 22px 55px clamp(68px,12%,104px);border:0;background:transparent;outline:0;font-size:17px;line-height:34px;color:#33271f}
+.foot{max-width:1120px;margin:0 auto;padding:0 16px 18px;color:#f3ead7;font-size:12px;display:flex;justify-content:space-between;gap:12px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.login{max-width:500px;margin:8vh auto;padding:34px 28px;text-align:center;background:url('assets/strip-yellow.png') center/100% 100% no-repeat;min-height:300px;display:flex;flex-direction:column;justify-content:center;filter:drop-shadow(0 18px 20px rgba(0,0,0,.18));position:relative}.login::before{content:"";position:absolute;width:92px;height:30px;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);background:url('assets/tape-kraft.png') center/contain no-repeat;opacity:.95}.login p{line-height:1.6}.login button{margin-top:12px;font-weight:bold;align-self:center}.hint{font-size:13px;color:#6b6556}.hidden{display:none!important}
+@media(max-width:690px){.app{display:block}.sidebar{margin-bottom:14px}.notelist{display:flex;overflow:auto;gap:10px;padding-bottom:4px}.noteitem{min-width:140px;max-width:180px}.pad{min-height:60vh}.pad textarea{min-height:101vh}.backtop{right:10px;bottom:12px}.heading input{font-size:20px}.topright .small{display:none}.top{padding:12px}.foot{font-size:11px;display:block}.login{background-size:100% 100%;margin:5vh 12px}}
+@media print{body{background:#fff}.top,.sidebar,.foot,.heading button,.hintedit,.toc,.backtop{display:none}.app{display:block;padding:0}.pad{box-shadow:none;min-height:100vh}.paper-surface{display:none}}
+</style>
+</head>
+<body>
+<section id="login">
+  <h1>Legal Pad</h1>
+  <p>Tu bloc de notas, privado y sincronizado entre dispositivos.</p>
+  <button id="signin" type="button">Entrar con Google</button>
+  <p id="loginmsg">Tus notas se guardarán en tu propia cuenta.</p>
+</section>
 
-/* Mr. M website texture kit — adapted to Legal Pad without layout or functionality changes.
-   Kit visual vocabulary: cream ruled paper, kraft backing, ink strokes, yellow/blue/coral markers. */
-:root{--paper:#f8f3e8;--line:#a8cee3;--red:#e65b58;--ink:#171717;--yellow:#ffe13f;--blue:#91d8ff;--kraft:#d5bc92}
-body{background-color:#e8dbc6;background-image:repeating-linear-gradient(16deg,#8e74500a 0 2px,transparent 2px 11px),radial-gradient(circle at 2px 2px,#72583b17 1px,transparent 2px),linear-gradient(125deg,#e5d4b6,#f3e6ce);background-size:auto,12px 12px,auto;color:var(--ink)}
-button{border:2px solid #171717;border-radius:7px;background:var(--yellow);color:#171717;font-weight:800;box-shadow:3px 3px 0 #171717;transition:transform .12s ease,box-shadow .12s ease}
-button:hover{background:#ffeb75;transform:translate(-1px,-1px);box-shadow:4px 4px 0 #171717}
-button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171717}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #279de0;outline-offset:2px}
-.brand{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;letter-spacing:.015em;text-shadow:1px 1px #ffffff9c}
-.small,.foot,.hint,.hintedit{color:#5b5146}
-.sidebar{border:3px solid #171717;border-radius:8px 10px 7px 9px;background-color:#fff9e9;background-image:repeating-linear-gradient(to bottom,transparent 0 31px,#94cee250 32px 33px),radial-gradient(circle at 1px 1px,#816b4d1a 1px,transparent 2px);background-size:auto,11px 11px;box-shadow:5px 6px 0 #171717;position:relative}
-.sidebar:before{content:"";position:absolute;left:-9px;top:-12px;width:64px;height:24px;pointer-events:none;transform:rotate(-14deg);opacity:.74;background:linear-gradient(90deg,#b18b5499,#f1d6a2b0 25%,#c8a676b9 78%,#b18b5499);clip-path:polygon(0 10%,96% 0,100% 86%,3% 100%)}
-.noteitem{font-weight:750}
-.noteitem.active{background:linear-gradient(176deg,transparent 14%,#91d8ff 14% 85%,transparent 85%);box-shadow:inset 3px 0 #171717}
-.noteitem:hover{background:linear-gradient(177deg,transparent 12%,#ffe13f 12% 88%,transparent 88%)}
-.pad{border:3px solid #171717;border-radius:8px 7px 10px 8px;background-color:#fffaf0;background-image:radial-gradient(circle at 1px 1px,#7b64481a 1px,transparent 1.7px),repeating-linear-gradient(92deg,transparent 0 75px,#82654306 76px 77px);background-size:13px 13px,auto;box-shadow:7px 9px 0 #171717,11px 16px 22px #5a432c3d}
-.pad:before{height:17px;background:repeating-linear-gradient(174deg,#ed5958 0 24px,#db4f51 24px 53px);border-bottom:2px solid #171717}
-.pad:after{width:3px;background:#e46a68;opacity:.74}
-.lines{background:repeating-linear-gradient(to bottom,transparent 0 32px,#a8cee39c 33px 34px);background-position:0 50px}
-.heading input{font-family:"Trebuchet MS",Arial,sans-serif;color:#171717;font-weight:900;letter-spacing:-.015em}
-.toc{border-bottom:2px dashed #24201b}
-.toc-label{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;color:#171717}
-.toc a{font-weight:800;border:2px solid #171717;border-radius:6px 8px 5px 7px;color:#171717;background:linear-gradient(178deg,transparent 12%,#91d8ff 12% 87%,transparent 87%);box-shadow:2px 2px 0 #171717}
-.toc a:nth-of-type(2n){background:linear-gradient(176deg,transparent 12%,#ffe13f 12% 86%,transparent 86%)}
-.toc a:nth-of-type(3n){background:linear-gradient(178deg,transparent 9%,#f2a09b 9% 90%,transparent 90%)}
-.hintedit code{background:#ffeaa0;border:1px dashed #171717;padding:1px 4px}
-.backtop{background:var(--yellow);color:#171717;border:3px solid #171717;box-shadow:3px 4px 0 #171717}
-.backtop:hover{background:var(--blue)}
-.login{border:3px solid #171717;border-top:16px solid #eb5a57;border-radius:8px;background-color:#fff8e7;background-image:repeating-linear-gradient(to bottom,transparent 0 32px,#a8cee36b 33px 34px),radial-gradient(circle at 1px 1px,#80684b20 1px,transparent 2px);background-size:auto,13px 13px;box-shadow:7px 9px 0 #171717}
-.login h1{font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900}
-@media print{body{background:#fff}.sidebar,.pad,.login{box-shadow:none}}
-</style></head><body>
-<section id="login" class="login"><h1>Legal Pad</h1><p>Tu bloc amarillo, privado y sincronizado.</p><button id="signin">Entrar con Google</button><p id="loginmsg" class="hint">Tus notas estarán en tu propia cuenta.</p></section>
-<div id="workspace" class="hidden"><header class="top"><strong class="brand">Legal Pad <span class="small">/ Mis notas</span></strong><div class="topright"><span class="small" id="userlabel"></span><button id="signout">Salir</button></div></header><div class="app"><aside class="sidebar"><div class="sidebarhead"><strong>Mis notas</strong><button id="newnote">+ Nueva</button></div><nav id="notelist" class="notelist" aria-label="Notas"></nav></aside><main class="pad"><div class="lines"></div><div class="heading"><input id="title" maxlength="120" aria-label="Título" placeholder="Sin título"><button id="download" title="Exportar texto">TXT</button><button id="delete" title="Eliminar nota">Eliminar</button></div><nav id="toc" class="toc" aria-label="Índice de esta nota"></nav><div class="hintedit"><button id="insertheading" class="insertheading" type="button">+ Encabezado H1</button> &nbsp; o escribe <code># Título</code> al inicio de una línea.</div><textarea id="body" aria-label="Contenido" placeholder="Empieza a escribir aquí..."></textarea></main></div><footer class="foot"><span id="status" role="status">Conectando…</span><span>Firebase Cloud Sync</span></footer><button id="backtop" class="backtop hidden" type="button" title="Volver al principio de la nota" aria-label="Volver al principio">↑ Arriba</button></div>
+<div id="workspace" class="hidden">
+  <header class="top">
+    <div class="brand">Legal Pad <span class="small">/ Mis notas</span></div>
+    <div class="topright"><span id="userlabel" class="small"></span><button id="signout" type="button" style="background:var(--blue)">Cerrar sesión</button></div>
+  </header>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebarhead"><strong>Mis notas</strong><button id="newnote" type="button" style="background:var(--blue)">+ Nueva</button></div>
+      <nav id="notelist" class="notelist" aria-label="Lista de notas"></nav>
+    </aside>
+
+    <main class="pad">
+      <div class="paper-texture"></div>
+      <div class="lines"></div>
+      <div class="frame-overlay"></div>
+      <div class="tape tape-left"></div>
+      <div class="tape tape-right"></div>
+      <div class="heading">
+        <input id="title" maxlength="120" aria-label="Título" placeholder="Sin título">
+        <button id="download" type="button" title="Exportar texto">TXT</button>
+        <button id="delete" type="button" title="Eliminar nota">Eliminar</button>
+      </div>
+      <nav id="toc" class="toc" aria-label="Índice de la nota"></nav>
+      <div class="hintedit"><button id="insertheading" class="insertheading" type="button">+ Encabezado H1</button> o escribe <code># Título</code> al inicio de una línea.</div>
+      <textarea id="body" aria-label="Contenido de la nota" placeholder="Empieza a escribir aquí..." spellcheck="true"></textarea>
+    </main>
+  </div>
+
+  <footer class="foot"><span id="status" role="status">Conectando…</span><span>Sincronización mediante Firebase</span></footer>
+</div>
+
+<button id="backtop" class="backtop hidden" type="button" aria-label="Volver arriba">↑ Arriba</button>
+
 <script type="module">
-import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getFirestore,collection,doc,addDoc,setDoc,deleteDoc,onSnapshot,serverTimestamp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
-import {firebaseConfig} from './firebase-config.js';
-const $=id=>document.getElementById(id),login=$('login'),workspace=$('workspace'),status=$('status'),title=$('title'),body=$('body');
-const auth=getAuth(initializeApp(firebaseConfig)),db=getFirestore();
-let user=null,notes=[],selected=null,unsubscribe=null,timer=null,dirty=false,pending=Promise.resolve(),generation=0;
-$('signin').onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){$('loginmsg').textContent='No fue posible iniciar sesión: '+e.message}};
-onAuthStateChanged(auth,u=>{generation++;clearTimeout(timer);if(unsubscribe)unsubscribe();unsubscribe=null;user=u;notes=[];selected=null;dirty=false;title.value='';body.value='';refreshPage();login.classList.toggle('hidden',!!u);workspace.classList.toggle('hidden',!u);if(!u)return;$('userlabel').textContent=u.displayName||u.email||'';status.textContent='Sincronizando…';const token=generation;unsubscribe=onSnapshot(collection(db,'users',u.uid,'notes'),snap=>{if(token!==generation)return;notes=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.toMillis?.()||0)-(a.updatedAt?.toMillis?.()||0));if(selected&&!notes.some(n=>n.id===selected)){selected=null;title.value='';body.value='';dirty=false;refreshPage()}if(!selected&&notes.length){selected=notes[0].id;populate()}render();if(!dirty)status.textContent='Sincronizado';},e=>status.textContent='Error de sincronización: '+e.message)});
-function render(){const n=$('notelist');n.replaceChildren();for(const item of notes){let b=document.createElement('button');b.className='noteitem'+(selected===item.id?' active':'');b.textContent=item.title?.trim()||'Sin título';b.onclick=()=>choose(item.id);n.append(b)}}
-function populate(){const n=notes.find(x=>x.id===selected);if(n){title.value=n.title||'';body.value=n.body||''}refreshPage();render()}
-async function persist(){clearTimeout(timer);if(!dirty||!selected||!user)return;const uid=user.uid,id=selected,value={title:title.value,body:body.value,updatedAt:serverTimestamp()},token=generation;dirty=false;status.textContent='Guardando…';pending=pending.catch(()=>{}).then(()=>setDoc(doc(db,'users',uid,'notes',id),value,{merge:true}));try{await pending;if(token===generation)status.textContent=dirty?'Cambios pendientes':'Guardado en la nube'}catch(e){if(token===generation){dirty=true;status.textContent='Error al guardar: '+e.message}}}
-function changed(){if(!user||!selected)return;dirty=true;status.textContent='Cambios pendientes…';clearTimeout(timer);timer=setTimeout(persist,900);const n=notes.find(x=>x.id===selected);if(n)n.title=title.value;render()}
-title.oninput=changed;body.oninput=()=>{changed();refreshPage()};
-function resizePage(){body.style.height='auto';body.style.height=Math.max(window.innerHeight*1.01,body.scrollHeight+2)+'px'}
-function headings(){const found=[];let offset=0;for(const line of body.value.split('\n')){const m=/^#\s+(.+?)\s*$/.exec(line);if(m)found.push({name:m[1],index:offset});offset+=line.length+1}return found}
-function jumpTo(index){const before=body.value.slice(0,index),measure=document.createElement('div'),cs=getComputedStyle(body);Object.assign(measure.style,{position:'absolute',visibility:'hidden',pointerEvents:'none',top:'0',left:'-99999px',width:cs.width,boxSizing:'border-box',padding:cs.padding,font:cs.font,lineHeight:cs.lineHeight,letterSpacing:cs.letterSpacing,whiteSpace:'pre-wrap',overflowWrap:'break-word',wordBreak:'break-word'});measure.textContent=before+'\u200b';document.body.append(measure);const y=measure.getBoundingClientRect().height-parseFloat(cs.paddingBottom)-parseFloat(cs.lineHeight);measure.remove();const top=window.scrollY+body.getBoundingClientRect().top+Math.max(0,y)-20;window.scrollTo({top,behavior:'smooth'})}
-function refreshPage(){resizePage();const nav=$('toc');nav.replaceChildren();const items=headings();if(items.length){const label=document.createElement('span');label.className='toc-label';label.textContent='ÍNDICE';nav.append(label)}for(const item of items){const link=document.createElement('a');link.href='#';link.textContent=item.name;link.addEventListener('click',e=>{e.preventDefault();jumpTo(item.index)});nav.append(link)}}
-$('insertheading').onclick=()=>{if(!selected)return;const start=body.selectionStart,end=body.selectionEnd,text=body.value;const lineStart=text.lastIndexOf('\n',start-1)+1;const prefix=lineStart===0?'':'\n';const insert=prefix+'# Nuevo encabezado\n';body.setRangeText(insert,start,end,'end');body.focus();changed();refreshPage()};
-$('backtop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
-function toggleTop(){ $('backtop').classList.toggle('hidden',!user||window.scrollY<220)}
-window.addEventListener('scroll',toggleTop,{passive:true});
-window.addEventListener('resize',resizePage);
-async function choose(id){if(id===selected)return;await persist();selected=id;populate()}
-$('newnote').onclick=async()=>{if(!user)return;await persist();try{const d=await addDoc(collection(db,'users',user.uid,'notes'),{title:'',body:'',updatedAt:serverTimestamp()});selected=d.id;title.value='';body.value='';refreshPage();render();body.focus();status.textContent='Nota creada'}catch(e){status.textContent='Error al crear: '+e.message}};
-$('delete').onclick=async()=>{if(!user||!selected||!confirm('¿Eliminar la nota de todos los dispositivos?'))return;await persist();const id=selected;try{await pending;await deleteDoc(doc(db,'users',user.uid,'notes',id));selected=null;title.value='';body.value='';refreshPage();status.textContent='Nota eliminada'}catch(e){status.textContent='Error al eliminar: '+e.message}};
-$('download').onclick=()=>{const name=(title.value.trim()||'mi-nota').replace(/[\\/:*?"<>|]/g,'').slice(0,70)||'mi-nota';const value=(title.value.trim()?title.value.trim()+'\n\n':'')+body.value;const url=URL.createObjectURL(new Blob([value],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
-$('signout').onclick=async()=>{await persist();await signOut(auth)};
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persist()});
-</script></body></html>
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { firebaseConfig } from './firebase-config.js';
+
+const $ = id => document.getElementById(id);
+const login = $('login'), workspace = $('workspace'), statusEl = $('status');
+const titleEl = $('title'), bodyEl = $('body'), tocEl = $('toc');
+const ready = !!firebaseConfig.apiKey;
+let auth, db, user = null, notes = [], selected = null, unsubscribe = null, timer = null, dirty = false, saveQueue = Promise.resolve(), writing = false;
+
+function resizePage(){
+  bodyEl.style.height = 'auto';
+  bodyEl.style.height = Math.max(window.innerHeight * 1.01, bodyEl.scrollHeight + 2) + 'px';
+}
+function parseHeadings(){
+  const items=[]; let offset=0;
+  for(const line of bodyEl.value.split('\n')){
+    const m=/^#\s+(.+?)\s*$/.exec(line);
+    if(m) items.push({name:m[1], index:offset});
+    offset += line.length + 1;
+  }
+  return items;
+}
+function jumpTo(index){
+  const before = bodyEl.value.slice(0,index);
+  const measure = document.createElement('div');
+  const cs = getComputedStyle(bodyEl);
+  Object.assign(measure.style, {
+    position:'absolute', visibility:'hidden', left:'-99999px', top:'0', width:cs.width, boxSizing:'border-box',
+    padding:cs.padding, font:cs.font, lineHeight:cs.lineHeight, whiteSpace:'pre-wrap', overflowWrap:'break-word', wordBreak:'break-word'
+  });
+  measure.textContent = before + '\u200b';
+  document.body.append(measure);
+  const y = measure.getBoundingClientRect().height - parseFloat(cs.paddingBottom) - parseFloat(cs.lineHeight);
+  measure.remove();
+  const top = window.scrollY + bodyEl.getBoundingClientRect().top + Math.max(0, y) - 20;
+  window.scrollTo({top, behavior:'smooth'});
+}
+function renderTOC(){
+  tocEl.replaceChildren();
+  const items = parseHeadings();
+  if(!items.length){ resizePage(); return; }
+  const label = document.createElement('span');
+  label.className = 'toc-label';
+  label.textContent = 'ÍNDICE';
+  tocEl.append(label);
+  items.forEach((item,i)=>{
+    const a = document.createElement('a');
+    a.href = '#';
+    a.textContent = item.name;
+    a.addEventListener('click', ev => { ev.preventDefault(); jumpTo(item.index); });
+    tocEl.append(a);
+  });
+  resizePage();
+}
+function toggleTop(){ $('backtop').classList.toggle('hidden', !user || window.scrollY < 260); }
+
+function renderList(){
+  const box = $('notelist');
+  box.replaceChildren();
+  for(const note of notes){
+    const btn = document.createElement('button');
+    btn.className = 'noteitem' + (selected === note.id ? ' active' : '');
+    btn.textContent = (note.title || '').trim() || 'Sin título';
+    btn.type = 'button';
+    btn.onclick = () => choose(note.id);
+    box.append(btn);
+  }
+}
+function populate(){
+  const n = notes.find(x => x.id === selected);
+  titleEl.value = n?.title || '';
+  bodyEl.value = n?.body || '';
+  renderTOC();
+  renderList();
+}
+async function persist(){
+  clearTimeout(timer);
+  if(!dirty || !selected || !user) return;
+  const uid = user.uid, id = selected;
+  const payload = { title: titleEl.value, body: bodyEl.value, updatedAt: serverTimestamp() };
+  dirty = false;
+  statusEl.textContent = 'Guardando…';
+  saveQueue = saveQueue.catch(()=>{}).then(()=>setDoc(doc(db,'users',uid,'notes',id), payload, {merge:true}));
+  try {
+    await saveQueue;
+    statusEl.textContent = dirty ? 'Cambios pendientes…' : 'Guardado en la nube';
+  } catch (e) {
+    dirty = true;
+    statusEl.textContent = 'Error al guardar: ' + e.message;
+  }
+}
+function changed(){
+  if(!user || !selected) return;
+  dirty = true;
+  writing = true;
+  statusEl.textContent = 'Cambios pendientes…';
+  const current = notes.find(x => x.id === selected);
+  if(current) current.title = titleEl.value;
+  clearTimeout(timer);
+  timer = setTimeout(() => { writing = false; persist(); }, 900);
+  renderList();
+  renderTOC();
+}
+async function choose(id){
+  if(id === selected) return;
+  await persist();
+  selected = id;
+  populate();
+}
+
+if(!ready){
+  $('signin').disabled = true;
+  $('loginmsg').textContent = 'Falta conectar Firebase.';
+} else {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app); db = getFirestore(app);
+  $('signin').onclick = async () => {
+    try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+    catch(e){
+      if(e.code === 'auth/popup-blocked') await signInWithRedirect(auth, new GoogleAuthProvider());
+      else $('loginmsg').textContent = 'No se pudo iniciar sesión: ' + e.message;
+    }
+  };
+  getRedirectResult(auth).catch(e => $('loginmsg').textContent = e.message);
+  onAuthStateChanged(auth, u => {
+    if(unsubscribe){ unsubscribe(); unsubscribe = null; }
+    user = u; notes = []; selected = null; dirty = false; clearTimeout(timer);
+    titleEl.value = ''; bodyEl.value = ''; renderTOC(); renderList(); toggleTop();
+    login.classList.toggle('hidden', !!u); workspace.classList.toggle('hidden', !u);
+    if(!u) return;
+    $('userlabel').textContent = u.displayName || u.email || '';
+    statusEl.textContent = 'Sincronizando…';
+    const col = collection(db, 'users', u.uid, 'notes');
+    unsubscribe = onSnapshot(col, snap => {
+      notes = snap.docs.map(d => ({id:d.id, ...d.data()})).sort((a,b)=>(b.updatedAt?.toMillis?.()||0) - (a.updatedAt?.toMillis?.()||0));
+      if(selected && !notes.some(n => n.id === selected)){ selected = null; titleEl.value = ''; bodyEl.value = ''; }
+      if(!selected && notes.length) selected = notes[0].id;
+      if(selected && !writing) populate(); else renderList();
+      statusEl.textContent = 'Sincronizado';
+    }, e => statusEl.textContent = 'Error de sincronización: ' + e.message);
+  });
+}
+
+titleEl.addEventListener('input', changed);
+bodyEl.addEventListener('input', changed);
+$('insertheading').onclick = () => {
+  if(!selected) return;
+  const start = bodyEl.selectionStart, end = bodyEl.selectionEnd;
+  const text = bodyEl.value;
+  const lineStart = text.lastIndexOf('\n', start - 1) + 1;
+  const prefix = lineStart === start ? '' : (start === 0 ? '' : '\n');
+  const insert = prefix + '# Nuevo encabezado\n';
+  bodyEl.setRangeText(insert, start, end, 'end');
+  bodyEl.focus();
+  changed();
+};
+$('newnote').onclick = async () => {
+  if(!user) return;
+  await persist();
+  try {
+    const d = await addDoc(collection(db, 'users', user.uid, 'notes'), { title:'', body:'', updatedAt: serverTimestamp() });
+    selected = d.id; titleEl.value = ''; bodyEl.value = ''; renderTOC(); renderList(); bodyEl.focus(); statusEl.textContent = 'Nota creada';
+  } catch(e){ statusEl.textContent = 'Error al crear: ' + e.message; }
+};
+$('delete').onclick = async () => {
+  if(!user || !selected || !confirm('¿Eliminar la nota de todos los dispositivos?')) return;
+  await persist();
+  const id = selected;
+  try {
+    await deleteDoc(doc(db, 'users', user.uid, 'notes', id));
+    selected = null; titleEl.value = ''; bodyEl.value = ''; renderTOC(); statusEl.textContent = 'Nota eliminada';
+  } catch(e){ statusEl.textContent = 'Error al eliminar: ' + e.message; }
+};
+$('download').onclick = () => {
+  const name = (titleEl.value.trim() || 'mi-nota').replace(/[\\/:*?"<>|]/g,'').slice(0,70) || 'mi-nota';
+  const content = (titleEl.value.trim() ? titleEl.value.trim() + '\n\n' : '') + bodyEl.value;
+  const url = URL.createObjectURL(new Blob([content], {type:'text/plain;charset=utf-8'}));
+  const a = document.createElement('a'); a.href = url; a.download = name + '.txt'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+$('signout').onclick = async () => { await persist(); await signOut(auth); };
+$('backtop').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+window.addEventListener('resize', resizePage);
+window.addEventListener('scroll', toggleTop, {passive:true});
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') persist(); });
+resizePage();
+</script>
+</body>
+</html>
